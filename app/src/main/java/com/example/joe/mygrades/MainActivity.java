@@ -1,5 +1,6 @@
 package com.example.joe.mygrades;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Declaring intent - used to start Activities
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,5 +52,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openCreateList(View view){
+        // return true if the id in the item selected is for the Create List Activity
+        //intent = new Intent(this, AddCourse.class);
+        //startActivity(intent);
     }
 }
