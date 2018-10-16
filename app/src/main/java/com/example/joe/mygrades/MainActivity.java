@@ -22,14 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     @Override
@@ -41,17 +34,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        // get the id of the item selected
+        switch(item.getItemId()){
+            case R.id.action_home :
+                // initialize an Intent for the Main Activity, start intent,
+                // return true if the id in the item selected is for the Main Activity
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            /*case R.id.action_add_course:
+                // initialize an Intent for the Add Course Activity, start intent,
+                // return true if the id in the item selected is for the Add Course Activity
+                intent = new Intent(this, addCourse.class);
+                startActivity(intent);
+                return true;*/
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void openCreateList(View view){
