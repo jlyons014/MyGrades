@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void openCreateList(View view){
+    public void openAddCourse(View view){
         // return true if the id in the item selected is for the Create List Activity
         //intent = new Intent(this, AddCourse.class);
         //startActivity(intent);
