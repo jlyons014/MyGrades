@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.joe.mygrades.CreateCourse">
+    <item
+        android:id = "@+id/add_course"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/action_create_course_list"
+        app:showAsAction="always"
+        android:onClick="createCourse" />
+    <item
+        android:id="@+id/action_home"
+        android:orderInCategory="1"
+        android:title="@string/action_home"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_create_course"
+        android:orderInCategory="2"
+        android:title="@string/create_course"
+        app:showAsAction="never" />
+</menu>

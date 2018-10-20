@@ -22,6 +22,10 @@
         <activity
             android:name=".AddCourse"
             android:label="@string/title_activity_add_course"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CreateCourse"
+            android:label="@string/title_activity_create_course"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

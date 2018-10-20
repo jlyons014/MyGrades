@@ -15,6 +15,13 @@ public class MainActivity extends AppCompatActivity {
     // Declaring intent - used to start Activities
     Intent intent;
 
+    // declare a DBHandler - used to communicate with the database
+    DBHandler dbHandler;
+
+    // declare a CourseLists CursorAdapter - used to link the data in the Cursor
+    // to the ListView
+    CourseLists courseListsAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +29,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // initialize DBHandler
+        dbHandler = new DBHandler(this, null);
 
+        // Initializes ShoppingLists CursorAdapter with the shopping list data in the database
+        courseListsAdapter = new CourseLists(this, dbHandler.getCourseLists(), 0);
     }
 
     @Override
@@ -42,20 +53,20 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
-            /*case R.id.action_add_course:
-                // initialize an Intent for the Add Course Activity, start intent,
-                // return true if the id in the item selected is for the Add Course Activity
-                intent = new Intent(this, addCourse.class);
+            case R.id.action_add_course:
+                // initialize an Intent for the Create Course Activity, start intent,
+                // return true if the id in the item selected is for the Create Course Activity
+                intent = new Intent(this, CreateCourse.class);
                 startActivity(intent);
-                return true;*/
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     public void openAddCourse(View view){
-        // return true if the id in the item selected is for the Create List Activity
-        //intent = new Intent(this, AddCourse.class);
-        //startActivity(intent);
+        // return true if the id in the item selected is for the Create Course Activity
+        intent = new Intent(this, CreateCourse.class);
+        startActivity(intent);
     }
 }

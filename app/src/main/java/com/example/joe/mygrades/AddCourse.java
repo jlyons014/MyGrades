@@ -29,15 +29,6 @@ public class AddCourse extends AppCompatActivity {
 
         //get the ID in the bundle
         id = bundle.getLong("_id");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     public boolean onOptionsItemSelected(MenuItem course){
