@@ -14,4 +14,6 @@
     <string name="semester">Semester</string>
     <string name="code">Code</string>
     <string name="grade">Grade</string>
+    <string name="title_activity_view_list">View List</string>
+    <string name="Home">Home</string>
 </resources>
