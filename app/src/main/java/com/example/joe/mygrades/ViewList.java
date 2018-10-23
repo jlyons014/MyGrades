@@ -74,10 +74,7 @@ public class ViewList extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.action_add_course:
-                intent = new Intent(this, AddCourse.class);
-                startActivity(intent);
-                return true;
+
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -86,9 +83,9 @@ public class ViewList extends AppCompatActivity {
 
     }
 
-    public void openAddCourse(View view){
+    public void openCreateCourse(View view){
 
-        intent = new Intent(this, AddCourse.class);
+        intent = new Intent(this, CreateCourse.class);
         intent.putExtra("_id", id);
     }
 

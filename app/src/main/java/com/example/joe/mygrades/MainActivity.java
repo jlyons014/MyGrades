@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_add_course:
+            case R.id.action_create_course:
                 // initialize an Intent for the Create Course Activity, start intent,
                 // return true if the id in the item selected is for the Create Course Activity
                 intent = new Intent(this, CreateCourse.class);
