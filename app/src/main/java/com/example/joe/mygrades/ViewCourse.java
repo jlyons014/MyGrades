@@ -2,15 +2,13 @@ package com.example.joe.mygrades;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class ViewList extends AppCompatActivity {
+public class ViewCourse extends AppCompatActivity {
 
     //declare an intent
     Intent intent;
@@ -29,7 +27,7 @@ public class ViewList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_list);
+        setContentView(R.layout.activity_view_course);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,7 +37,7 @@ public class ViewList extends AppCompatActivity {
         //get the id in the bundle
         id = bundle.getLong("_id", id);
 
-        //intitialize dbHandeler
+        //initialize dbHandler
         dbHandler = new DBHandler(this,null);
 
         //call DBHandler method that gets the name of the course list
@@ -55,7 +53,7 @@ public class ViewList extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //set the action bar of the main activity to whatever is defined in the
         //menu main resource
-        getMenuInflater().inflate(R.menu.menu_view_list, menu);
+        getMenuInflater().inflate(R.menu.menu_view_course, menu);
         return true;
 
 
