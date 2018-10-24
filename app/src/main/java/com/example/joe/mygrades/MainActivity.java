@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     // to the ListView
     CourseLists courseListsAdapter;
 
+    // declare a ListView - used to reference the ListView in the resource file
+    ListView courseListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +39,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Initializes ShoppingLists CursorAdapter with the shopping list data in the database
         courseListsAdapter = new CourseLists(this, dbHandler.getCourseLists(), 0);
+
+        // initialize ListView
+        courseListView = (ListView) findViewById(R.id.courseListView);
+
+        // set ShoppingLists CursorAdapter on ListView
+        courseListView.setAdapter(courseListsAdapter);
+
+        // register OnItemClickLister on ListView
+        courseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // return true if the id in the item selected is for the Create Course Activity
+                intent = new Intent(MainActivity.this, ViewCourse.class);
+
+                // put the shopping list id of the clicked row in the intent
+                intent.putExtra("_id", id);
+
+                // start the intent
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
