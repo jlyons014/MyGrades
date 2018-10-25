@@ -23,6 +23,10 @@
             android:name=".CreateCourse"
             android:label="@string/title_activity_create_course"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ViewCourse"
+            android:label="ViewList"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

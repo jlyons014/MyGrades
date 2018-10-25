@@ -46,9 +46,9 @@ public class CourseLists extends CursorAdapter {
                 setText(cursor.getString(cursor.getColumnIndex("name")));
         ((TextView) view.findViewById(R.id.semesterTextView)).
                 setText(cursor.getString(cursor.getColumnIndex("semester")));
-        ((TextView) view.findViewById(R.id.codeTextView)).
-                setText(cursor.getString(cursor.getColumnIndex("code")));
-        ((TextView) view.findViewById(R.id.gradeTextView)).
-                setText(cursor.getString(cursor.getColumnIndex("grade")));
+        //((TextView) view.findViewById(R.id.codeTextView)).
+                //setText(cursor.getString(cursor.getColumnIndex("code")));
+        //((TextView) view.findViewById(R.id.gradeTextView)).
+          //      setText(cursor.getString(cursor.getColumnIndex("grade")));
     }
 }

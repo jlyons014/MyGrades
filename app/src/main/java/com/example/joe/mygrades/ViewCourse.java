@@ -46,10 +46,28 @@ public class ViewCourse extends AppCompatActivity {
         //set the title of the View List activity to course list name
         this.setTitle(courseListName);
 
-
-
-
         };
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // get the id of the item selected
+        switch(item.getItemId()){
+            case R.id.action_home :
+                // initialize an Intent for the Main Activity, start intent,
+                // return true if the id in the item selected is for the Main Activity
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_create_course:
+                // initialize an Intent for the Create Course Activity, start intent,
+                // return true if the id in the item selected is for the Create Course Activity
+                intent = new Intent(this, CreateCourse.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         //set the action bar of the main activity to whatever is defined in the
         //menu main resource
