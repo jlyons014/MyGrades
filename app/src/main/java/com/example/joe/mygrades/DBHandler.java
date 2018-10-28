@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.EditText;
+
+import java.util.jar.Attributes;
 
 /**
  * The DBHandler class is used to set up the mygrades database
@@ -26,17 +29,19 @@ public class DBHandler extends SQLiteOpenHelper {
 
     /**
      * Initializes a DBHandler. Create a version of our database
+     *
      * @param context reference to the activity that initializes the DBHandler
      * @param factory null
      */
-    public DBHandler(Context context, SQLiteDatabase.CursorFactory factory){
+    public DBHandler(Context context, SQLiteDatabase.CursorFactory factory) {
         // call superclass constructor
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 
     /**
      * Creates database tables
-     * @param sqLiteDatabase  reference to the mygrades database
+     *
+     * @param sqLiteDatabase reference to the mygrades database
      */
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -55,9 +60,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     /**
      * This method gets called when a new version of the database is initialized
+     *
      * @param sqLiteDatabase reference to the mygrades database
-     * @param oldVersion old version of mygrades database
-     * @param newVersion new version of mygrades database
+     * @param oldVersion     old version of mygrades database
+     * @param newVersion     new version of mygrades database
      */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
@@ -72,12 +78,13 @@ public class DBHandler extends SQLiteOpenHelper {
     /**
      * This method gets called when the add course in the AddCourse action bar gets
      * clicked. It inserts a new row into the course list table.
-     * @param name course name typed in by user
+     *
+     * @param name     course name typed in by user
      * @param semester course semester typed in by the user
-     * @param code course code typed in by the user
-     * @param grade course grade typed in by the user
+     * @param code     course code typed in by the user
+     * @param grade    course grade typed in by the user
      */
-    public void addCourse(String name, String semester, String code, String grade){
+    public void addCourse(String name, String semester, String code, String grade) {
 
         //get writeable reference to mygrades database
         SQLiteDatabase db = getWritableDatabase();
@@ -102,9 +109,10 @@ public class DBHandler extends SQLiteOpenHelper {
 
     /**
      * This method gets called when the Main Activity is created.
+     *
      * @return Cursor that contains all of the rows in the course list table
      */
-    public Cursor getCourseLists(){
+    public Cursor getCourseLists() {
 
         //get writeable reference to mygrades database
         SQLiteDatabase db = getWritableDatabase();
@@ -114,7 +122,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_COURSE_LIST, null);
     }
 
-    public String getCourseListName(int id){
+    public String getCourseListName(int id) {
         //get writeable reference to mygrades database
         SQLiteDatabase db = getWritableDatabase();
 
@@ -133,7 +141,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         // if the course list name in the Cursor isn't null
-        if(cursor.getString(cursor.getColumnIndex("name")) != null){
+        if (cursor.getString(cursor.getColumnIndex("name")) != null) {
             // get the course list name and store it in our String
             dbString = cursor.getString(cursor.getColumnIndex("name"));
         }
@@ -143,5 +151,27 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // return course list name
         return dbString;
+    }
+
+    public String  getColumnCourseName(int id){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String course = "";
+
+        String query = "SELECT * FROM " + TABLE_COURSE_LIST + " WHERE " +
+                COLUMN_COURSE_ID + " = " + id;
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        if (cursor.getString(cursor.getColumnIndex("name")) != null){
+            course = cursor.getString(cursor.getColumnIndex("name"));
+        }
+
+        db.close();
+
+        return course;
     }
 }
