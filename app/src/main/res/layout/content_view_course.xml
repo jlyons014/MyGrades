@@ -32,8 +32,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="300dp"
+                android:editable="false"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="none" />
         </TableRow>
 
         <TableRow
@@ -50,8 +51,9 @@
                 android:id="@+id/semesterEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="none" />
         </TableRow>
 
         <TableRow
@@ -68,8 +70,9 @@
                 android:id="@+id/codeEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="none" />
         </TableRow>
 
         <TableRow
@@ -86,8 +89,9 @@
                 android:id="@+id/gradeEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:editable="false"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="none" />
         </TableRow>
 
     </TableLayout>

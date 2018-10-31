@@ -174,4 +174,70 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return course;
     }
+
+    public String  getColumnCourseSemester(int id){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String course = "";
+
+        String query = "SELECT * FROM " + TABLE_COURSE_LIST + " WHERE " +
+                COLUMN_COURSE_ID + " = " + id;
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        if (cursor.getString(cursor.getColumnIndex("semester")) != null){
+            course = cursor.getString(cursor.getColumnIndex("semester"));
+        }
+
+        db.close();
+
+        return course;
+    }
+
+    public String  getColumnCourseCode(int id){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String course = "";
+
+        String query = "SELECT * FROM " + TABLE_COURSE_LIST + " WHERE " +
+                COLUMN_COURSE_ID + " = " + id;
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        if (cursor.getString(cursor.getColumnIndex("code")) != null){
+            course = cursor.getString(cursor.getColumnIndex("code"));
+        }
+
+        db.close();
+
+        return course;
+    }
+
+    public String  getColumnCourseGrade(int id){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String course = "";
+
+        String query = "SELECT * FROM " + TABLE_COURSE_LIST + " WHERE " +
+                COLUMN_COURSE_ID + " = " + id;
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        if (cursor.getString(cursor.getColumnIndex("grade")) != null){
+            course = cursor.getString(cursor.getColumnIndex("grade"));
+        }
+
+        db.close();
+
+        return course;
+    }
 }

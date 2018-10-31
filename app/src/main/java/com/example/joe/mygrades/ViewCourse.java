@@ -51,9 +51,27 @@ public class ViewCourse extends AppCompatActivity {
         //set the title of the View List activity to course list name
         this.setTitle(courseListName);
 
+        // Declare and Initialize variables to hold Course details
         String courseName = dbHandler.getColumnCourseName((int)id);
+        String courseSemester = dbHandler.getColumnCourseSemester((int)id);
+        String courseCode = dbHandler.getColumnCourseCode((int)id);
+        String courseGrade = dbHandler.getColumnCourseGrade((int)id);
 
+        // Set name of course in its EditText
+        EditText setname = findViewById(R.id.nameEditText);
+        setname.setText(courseName);
 
+        // Set semester of course in its EditText
+        EditText setsemester = findViewById(R.id.semesterEditText);
+        setsemester.setText(courseSemester);
+
+        // Set code of course in its EditText
+        EditText setcode = findViewById(R.id.codeEditText);
+        setcode.setText(courseCode);
+
+        // Set grade of course in its EditText
+        EditText setgrade = findViewById(R.id.gradeEditText);
+        setgrade.setText(courseGrade);
         };
 
     public boolean onOptionsItemSelected(MenuItem item) {

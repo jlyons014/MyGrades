@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
         // initialize DBHandler
         dbHandler = new DBHandler(this, null);
 
-        // Initializes ShoppingLists CursorAdapter with the shopping list data in the database
+        // Initializes CourseLists CursorAdapter with the shopping list data in the database
         courseListsAdapter = new CourseLists(this, dbHandler.getCourseLists(), 0);
 
         // initialize ListView
         courseListView = (ListView) findViewById(R.id.courseListView);
 
-        // set ShoppingLists CursorAdapter on ListView
+        // set CourseLists CursorAdapter on ListView
         courseListView.setAdapter(courseListsAdapter);
 
         // register OnItemClickLister on ListView
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 // return true if the id in the item selected is for the Create Course Activity
                 intent = new Intent(MainActivity.this, ViewCourse.class);
 
-                // put the shopping list id of the clicked row in the intent
+                // put the course list id of the clicked row in the intent
                 intent.putExtra("_id", id);
 
                 // start the intent
