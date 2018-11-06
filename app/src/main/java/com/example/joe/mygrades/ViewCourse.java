@@ -89,6 +89,12 @@ public class ViewCourse extends AppCompatActivity {
                 intent = new Intent(this, CreateCourse.class);
                 startActivity(intent);
                 return true;
+            case R.id.action_update_course:
+
+                intent = new Intent(this, UpdateCourse.class);
+                startActivity(intent);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

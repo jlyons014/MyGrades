@@ -6,7 +6,6 @@
     <string name="title_activity_add_course">Add Course</string>
     <string name="home">Home</string>
     <string name="add_course">Add Course</string>
-    <string name="update">Update</string>
     <string name="title_activity_create_course">CreateCourse</string>
     <string name="create_course">Create Course</string>
     <string name="action_create_course_list">Create Course List</string>
@@ -16,4 +15,6 @@
     <string name="grade">Grade</string>
     <string name="title_activity_view_list">View List</string>
     <string name="Home">Home</string>
+    <string name="update">Update</string>
+    <string name="title_activity_update_course">Update Course</string>
 </resources>

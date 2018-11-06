@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.joe.mygrades.ViewCourse">
     <item
+
+        android:id="@+id/action_update_course"
+        android:orderInCategory="0"
+        android:title="@string/update"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_home"
         android:orderInCategory="1"
         android:title="@string/action_home"
