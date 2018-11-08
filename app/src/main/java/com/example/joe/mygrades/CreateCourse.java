@@ -118,6 +118,10 @@ public class CreateCourse extends AppCompatActivity {
             dbHandler.addCourse(name, semester, code, grade);
             Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
         }
+
+        // returns to Main Activity if Course is deleted
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 }

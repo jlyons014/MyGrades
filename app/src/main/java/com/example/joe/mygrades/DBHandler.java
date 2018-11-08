@@ -240,4 +240,24 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return course;
     }
+
+    public void deleteSelectedCourse(int id) {
+        //get writeable reference to mygrades database
+        SQLiteDatabase db = getWritableDatabase();
+
+        // define select statement that will select everything from the
+        // course list table for the specified id
+        String query = "DELETE FROM " + TABLE_COURSE_LIST +
+                " WHERE " + COLUMN_COURSE_ID + " = " + id;
+
+        // execute select statement
+        Cursor cursor = db.rawQuery(query, null);
+
+        // move to the first row in the Cursor
+        cursor.moveToFirst();
+
+        // close our reference to the mygrades database
+        db.close();
+    }
+
 }

@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewCourse extends AppCompatActivity {
 
@@ -137,7 +138,21 @@ public class ViewCourse extends AppCompatActivity {
         intent.putExtra("_id", id);
     }
 
+    public void deleteCourse(MenuItem menuItem){
+        //initialize dbHandler
+        dbHandler = new DBHandler(this,null);
 
+        //call DBHandler method to delete selected course from the course list
+        dbHandler.deleteSelectedCourse((int) id);
+        Toast.makeText(this, "Course has been deleted!", Toast.LENGTH_LONG).show();
+
+        // returns to Main Activity if Course is deleted
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
+
+
+
+}
 
 
