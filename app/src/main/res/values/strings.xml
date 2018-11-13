@@ -18,4 +18,5 @@
     <string name="update">Update</string>
     <string name="title_activity_update_course">Update Course</string>
     <string name="action_delete_course">delete_course</string>
+    <string name="Save">save</string>
 </resources>

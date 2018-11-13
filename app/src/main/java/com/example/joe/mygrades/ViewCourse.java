@@ -93,6 +93,7 @@ public class ViewCourse extends AppCompatActivity {
             case R.id.action_update_course:
 
                 intent = new Intent(this, UpdateCourse.class);
+                intent.putExtra("_id", id);
                 startActivity(intent);
                 return true;
 
@@ -120,6 +121,11 @@ public class ViewCourse extends AppCompatActivity {
                 return true;
             case R.id.action_create_course:
                 intent = new Intent(this,CreateCourse.class);
+                startActivity(intent);
+                return true;
+            case R.id.action_update_course:
+                intent = new Intent(this, UpdateCourse.class);
+                intent.putExtra("_id", id);
                 startActivity(intent);
                 return true;
 
