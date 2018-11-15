@@ -17,6 +17,12 @@ import android.widget.Toast;
 public class UpdateCourse extends AppCompatActivity {
 
 
+    // Declare editTexts - used to reference the EditTexts in the resource file
+    EditText nameEditText;
+    EditText semesterEditText;
+    EditText codeEditText;
+    EditText gradeEditText;
+
     //declare an intent
     Intent intent;
 
@@ -123,6 +129,30 @@ public class UpdateCourse extends AppCompatActivity {
 
         }
 
+    }
+
+    public void updateCourse(MenuItem menuItem){
+        //initialize dbHandler
+        dbHandler = new DBHandler(this,null);
+
+        // Initialize EditTexts
+        nameEditText = (EditText) findViewById(R.id.nameEditText);
+        semesterEditText = (EditText) findViewById(R.id.semesterEditText);
+        codeEditText = (EditText) findViewById(R.id.codeEditText);
+        gradeEditText = (EditText) findViewById(R.id.gradeEditText);
+
+        String name = nameEditText.getText().toString();
+        String semester = semesterEditText.getText().toString();
+        String code = codeEditText.getText().toString();
+        String grade = gradeEditText.getText().toString();
+
+        //call DBHandler method to update selected course from the course list
+        dbHandler.updateSelectedCourse((int) id, name, semester, code, grade);
+        Toast.makeText(this, "Course has been updated!", Toast.LENGTH_LONG).show();
+
+        // returns to Main Activity if Course is updated
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 

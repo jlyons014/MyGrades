@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.jar.Attributes;
 
@@ -141,7 +144,7 @@ public class DBHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         // if the course list name in the Cursor isn't null
-        if (cursor.getString(cursor.getColumnIndex("name")) != null) {
+         if (cursor.getString(cursor.getColumnIndex("name")) != null) {
             // get the course list name and store it in our String
             dbString = cursor.getString(cursor.getColumnIndex("name"));
         }
@@ -169,6 +172,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor.getString(cursor.getColumnIndex("name")) != null){
             course = cursor.getString(cursor.getColumnIndex("name"));
         }
+
 
         db.close();
 
@@ -260,4 +264,22 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateSelectedCourse(int id, String name, String semester, String code, String grade) {
+        //get writeable reference to mygrades database
+        SQLiteDatabase db = getWritableDatabase();
+
+        //replacing values in column with users new values
+        ContentValues cv = new ContentValues();
+        cv.put("name",name);
+        cv.put("semester", semester);
+        cv.put("code", code);
+        cv.put("grade", grade);
+
+        //executing update statement
+        db.update(TABLE_COURSE_LIST, cv, "_id="+id, null);
+
+        //closing reference to database
+        db.close();
+
+    }
 }
