@@ -29,12 +29,13 @@
 
             <EditText
                 android:id="@+id/nameEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:width="300dp"
+                android:layout_width="270dp"
+                android:layout_height="50dp"
+                android:width="200dp"
                 android:editable="false"
                 android:ems="10"
-                android:inputType="none" />
+                android:maxLength="25" />
+
         </TableRow>
 
         <TableRow
@@ -54,6 +55,27 @@
                 android:editable="false"
                 android:ems="10"
                 android:inputType="none" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/yearTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Year" />
+
+            <EditText
+                android:id="@+id/yearEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:editable="false"
+                android:ems="10"
+                android:inputType="none"
+                android:maxLength="4" />
         </TableRow>
 
         <TableRow
@@ -69,10 +91,10 @@
             <EditText
                 android:id="@+id/codeEditText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:editable="false"
                 android:ems="10"
-                android:inputType="none" />
+                android:maxLength="7" />
         </TableRow>
 
         <TableRow
@@ -92,7 +114,10 @@
                 android:editable="false"
                 android:ems="10"
                 android:inputType="none" />
+
         </TableRow>
 
     </TableLayout>
+
+
 </android.support.constraint.ConstraintLayout>

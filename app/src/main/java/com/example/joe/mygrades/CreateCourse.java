@@ -6,10 +6,18 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class CreateCourse extends AppCompatActivity {
@@ -20,8 +28,13 @@ public class CreateCourse extends AppCompatActivity {
     // Declare editTexts - used to reference the EditTexts in the resource file
     EditText nameEditText;
     EditText semesterEditText;
+    EditText yearEditText;
     EditText codeEditText;
     EditText gradeEditText;
+
+    // Spinner for Semester and Code
+    Spinner spinner1;
+    Spinner spinner2;
 
     // declare DBHandler
     DBHandler dbHandler;
@@ -36,11 +49,64 @@ public class CreateCourse extends AppCompatActivity {
         // Initialize EditTexts
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         semesterEditText = (EditText) findViewById(R.id.semesterEditText);
+        yearEditText = (EditText) findViewById(R.id.yearEditText);
         codeEditText = (EditText) findViewById(R.id.codeEditText);
         gradeEditText = (EditText) findViewById(R.id.gradeEditText);
 
         // initialize DBHandler
         dbHandler = new DBHandler(this, null);
+
+        // Spinner for Semester
+        spinner1 = (Spinner) findViewById(R.id.spinnerSemester);
+        // Spinner for Grade
+        spinner2 = (Spinner) findViewById(R.id.spinnerGrade);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
+                R.array.semester_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner1.setAdapter(adapter1);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.grade_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner2.setAdapter(adapter2);
+
+        codeEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                if(codeEditText.length() > 3){
+                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                }else if (codeEditText.length() < 3){
+                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(codeEditText.length() > 3){
+                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                }else if (codeEditText.length() < 3){
+                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(codeEditText.length() > 3){
+                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                }else if (codeEditText.length() < 3){
+                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+                }
+            }
+        });
     }
     /**
      * This method sets the Action Bar of the Create Course Activity to whatever
@@ -93,35 +159,58 @@ public class CreateCourse extends AppCompatActivity {
 
         // get data input in EditTexts and store it in Strings
         String name = nameEditText.getText().toString();
-        String semester = semesterEditText.getText().toString();
+        //String semester = semesterEditText.getText().toString();
+        String semester = spinner1.getSelectedItem().toString();
+        String year = yearEditText.getText().toString();
         String code = codeEditText.getText().toString();
-        String grade = gradeEditText.getText().toString();
+        //String grade = gradeEditText.getText().toString();
+        String grade = spinner2.getSelectedItem().toString();
 
         // trim Strings and see if any are equal to an empty String
-        if(name.trim().equals("") || semester.trim().equals("")){
+        if(name.trim().equals("") || semester.equalsIgnoreCase("--Select--")){
             // required data hasn't been input, so display Toast
             Toast.makeText(this, "Please enter a name and a semester!", Toast.LENGTH_LONG).show();
-        } else if(code.trim().equals("") && grade.trim().equals("")){
+        } else if(code.trim().equals("") && year.trim().equals("") && grade.equalsIgnoreCase("--Select--")){
             // required data has been input, update database and display a different Toast
-            dbHandler.addCourse(name, semester, " ", " ");
+            dbHandler.addCourse(name, semester,"", "", " ");
             Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
-        } else if(!code.trim().equals("") && grade.trim().equals("")){
-            // required data has been input + 1 unrequired data, update database and display a different Toast
-            dbHandler.addCourse(name, semester, code, " ");
-            Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
-        } else if(code.trim().equals(" ") && !grade.trim().equals("")){
-            // required data has been input + 1 unrequired data, update database and display a different Toast
-            dbHandler.addCourse(name, semester, "", grade);
-            Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
-        } else{
-            // all data has been input, update database and display a different Toast
-            dbHandler.addCourse(name, semester, code, grade);
-            Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
-        }
 
-        // returns to Main Activity if Course is deleted
-        intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+            // returns to Main Activity
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else if(!code.trim().equals("") && year.trim().equals("") && grade.equalsIgnoreCase("--Select--")){
+            // required data has been input + 1 unrequired data, update database and display a different Toast
+            dbHandler.addCourse(name, semester,"", code, " ");
+            Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
+
+            // returns to Main Activity
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else if(code.trim().equals(" ") && !year.trim().equals("") && grade.equalsIgnoreCase("--Select--")){
+            // required data has been input + 1 unrequired data, update database and display a different Toast
+            dbHandler.addCourse(name, semester, year, "", " ");
+            Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
+
+            // returns to Main Activity
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else if(code.trim().equals(" ") && year.trim().equals("") && !grade.equalsIgnoreCase("--Select--")){
+            // required data has been input + 1 unrequired data, update database and display a different Toast
+            dbHandler.addCourse(name, semester,"", "", grade);
+            Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
+
+            // returns to Main Activity
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }else{
+            // all data has been input, update database and display a different Toast
+            dbHandler.addCourse(name, semester, year, code, grade);
+            Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
+
+            // returns to Main Activity
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
 }

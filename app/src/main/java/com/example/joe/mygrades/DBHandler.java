@@ -27,6 +27,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_COURSE_ID = "_id";
     private static final String COLUMN_COURSE_NAME = "name";
     private static final String COLUMN_COURSE_SEMESTER = "semester";
+    private static final String COLUMN_COURSE_YEAR = "year";
     private static final String COLUMN_COURSE_CODE = "code";
     private static final String COLUMN_COURSE_GRADE = "grade";
 
@@ -53,6 +54,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_COURSE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_COURSE_NAME + " TEXT, " +
                 COLUMN_COURSE_SEMESTER + " TEXT, " +
+                COLUMN_COURSE_YEAR + " TEXT, " +
                 COLUMN_COURSE_CODE + " TEXT, " +
                 COLUMN_COURSE_GRADE + " TEXT " +
                 ");";
@@ -84,10 +86,11 @@ public class DBHandler extends SQLiteOpenHelper {
      *
      * @param name     course name typed in by user
      * @param semester course semester typed in by the user
+     * @param year     course year typed in by the user
      * @param code     course code typed in by the user
      * @param grade    course grade typed in by the user
      */
-    public void addCourse(String name, String semester, String code, String grade) {
+    public void addCourse(String name, String semester, String year, String code, String grade) {
 
         //get writeable reference to mygrades database
         SQLiteDatabase db = getWritableDatabase();
@@ -100,6 +103,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // the column
         values.put(COLUMN_COURSE_NAME, name);
         values.put(COLUMN_COURSE_SEMESTER, semester);
+        values.put(COLUMN_COURSE_YEAR, year);
         values.put(COLUMN_COURSE_CODE, code);
         values.put(COLUMN_COURSE_GRADE, grade);
 
@@ -194,6 +198,28 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor.getString(cursor.getColumnIndex("semester")) != null){
             course = cursor.getString(cursor.getColumnIndex("semester"));
+        }
+
+        db.close();
+
+        return course;
+    }
+
+    public String  getColumnCourseYear(int id){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        String course = "";
+
+        String query = "SELECT * FROM " + TABLE_COURSE_LIST + " WHERE " +
+                COLUMN_COURSE_ID + " = " + id;
+
+        Cursor cursor = db.rawQuery(query,null);
+
+        cursor.moveToFirst();
+
+        if (cursor.getString(cursor.getColumnIndex("year")) != null){
+            course = cursor.getString(cursor.getColumnIndex("year"));
         }
 
         db.close();

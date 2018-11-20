@@ -55,6 +55,7 @@ public class ViewCourse extends AppCompatActivity {
         // Declare and Initialize variables to hold Course details
         String courseName = dbHandler.getColumnCourseName((int)id);
         String courseSemester = dbHandler.getColumnCourseSemester((int)id);
+        String courseYear = dbHandler.getColumnCourseYear((int)id);
         String courseCode = dbHandler.getColumnCourseCode((int)id);
         String courseGrade = dbHandler.getColumnCourseGrade((int)id);
 
@@ -65,6 +66,10 @@ public class ViewCourse extends AppCompatActivity {
         // Set semester of course in its EditText
         EditText setsemester = findViewById(R.id.semesterEditText);
         setsemester.setText(courseSemester);
+
+        // Set semester of course in its EditText
+        EditText setyear = findViewById(R.id.yearEditText);
+        setyear.setText(courseYear);
 
         // Set code of course in its EditText
         EditText setcode = findViewById(R.id.codeEditText);
