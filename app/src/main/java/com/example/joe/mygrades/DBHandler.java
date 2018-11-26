@@ -126,7 +126,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         // execute select statement that selects all rows from the
         // course list table and returns them as a cursor
-        return db.rawQuery("SELECT * FROM " + TABLE_COURSE_LIST, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_COURSE_LIST + " ORDER BY " + COLUMN_COURSE_NAME, null);
     }
 
     public String getCourseListName(int id) {
