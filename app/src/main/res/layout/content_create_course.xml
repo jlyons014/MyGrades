@@ -33,6 +33,7 @@
                 android:layout_height="50dp"
                 android:width="200dp"
                 android:ems="10"
+                android:hint="Course Name"
                 android:inputType="textPersonName|textCapWords"
                 android:maxLength="25" />
 
@@ -71,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:ems="10"
+                android:hint="####"
                 android:inputType="number"
                 android:maxLength="4" />
         </TableRow>
@@ -90,9 +92,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:capitalize="characters"
-                android:ems="10"
-                android:inputType="textCapCharacters"
                 android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:ems="10"
+                android:hint="[aaaa###]"
+                android:inputType="textCapCharacters"
                 android:maxLength="7" />
         </TableRow>
 

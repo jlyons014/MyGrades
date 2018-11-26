@@ -6,10 +6,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 
@@ -20,8 +25,13 @@ public class UpdateCourse extends AppCompatActivity {
     // Declare editTexts - used to reference the EditTexts in the resource file
     EditText nameEditText;
     EditText semesterEditText;
+    EditText yearEditText;
     EditText codeEditText;
     EditText gradeEditText;
+
+    // Spinner for Semester and Code
+    Spinner spinner1;
+    Spinner spinner2;
 
     //declare an intent
     Intent intent;
@@ -59,24 +69,72 @@ public class UpdateCourse extends AppCompatActivity {
         // Declare and Initialize variables to hold Course details
         String courseName = dbHandler.getColumnCourseName((int)id);
         String courseSemester = dbHandler.getColumnCourseSemester((int)id);
+        String courseYear = dbHandler.getColumnCourseYear((int)id);
         String courseCode = dbHandler.getColumnCourseCode((int)id);
         String courseGrade = dbHandler.getColumnCourseGrade((int)id);
+
+        spinner1 = (Spinner) findViewById(R.id.spinnerSemester);
+        spinner2 = (Spinner) findViewById(R.id.spinnerGrade);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this,
+                R.array.semester_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner1.setAdapter(adapter1);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,
+                R.array.grade_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner2.setAdapter(adapter2);
 
         // Set name of course in its EditText
         EditText setname = findViewById(R.id.nameEditText);
         setname.setText(courseName);
 
-        // Set semester of course in its EditText
-        EditText setsemester = findViewById(R.id.semesterEditText);
-        setsemester.setText(courseSemester);
+        // Set semester of course in its spinner
+        spinner1.setSelection(adapter1.getPosition(courseSemester));
+        //setsemester.setText(courseSemester);
+
+        // Set year of course in its EditText
+        EditText setyear = findViewById(R.id.yearEditText);
+        setyear.setText(courseYear);
 
         // Set code of course in its EditText
-        EditText setcode = findViewById(R.id.codeEditText);
+        final EditText setcode = findViewById(R.id.codeEditText);
         setcode.setText(courseCode);
 
-        // Set grade of course in its EditText
-        EditText setgrade = findViewById(R.id.gradeEditText);
-        setgrade.setText(courseGrade);
+        // Set grade of course in its spinner
+        spinner2.setSelection(adapter2.getPosition(courseGrade));
+
+        setcode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //String text;
+                if(setcode.getSelectionStart() < 4){
+                    setcode.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+                    //text = codeEditText.getText().toString();
+                    //text = text.toUpperCase();
+                    //codeEditText.setText(text);
+                }else{
+                    setcode.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                }
+            }
+        });
     };
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -137,17 +195,24 @@ public class UpdateCourse extends AppCompatActivity {
 
         // Initialize EditTexts
         nameEditText = (EditText) findViewById(R.id.nameEditText);
-        semesterEditText = (EditText) findViewById(R.id.semesterEditText);
+        //semesterEditText = (EditText) findViewById(R.id.semesterEditText);
+        yearEditText = (EditText) findViewById(R.id.yearEditText);
         codeEditText = (EditText) findViewById(R.id.codeEditText);
-        gradeEditText = (EditText) findViewById(R.id.gradeEditText);
+        //gradeEditText = (EditText) findViewById(R.id.gradeEditText);
+
+        spinner1 = (Spinner) findViewById(R.id.spinnerSemester);
+        spinner2 = (Spinner) findViewById(R.id.spinnerGrade);
 
         String name = nameEditText.getText().toString();
-        String semester = semesterEditText.getText().toString();
+        //String semester = semesterEditText.getText().toString();
+        String semester = spinner1.getSelectedItem().toString();
+        String year = yearEditText.getText().toString();
         String code = codeEditText.getText().toString();
-        String grade = gradeEditText.getText().toString();
+        //String grade = gradeEditText.getText().toString();
+        String grade = spinner2.getSelectedItem().toString();
 
         //call DBHandler method to update selected course from the course list
-        dbHandler.updateSelectedCourse((int) id, name, semester, code, grade);
+        dbHandler.updateSelectedCourse((int) id, name, semester, year, code, grade);
         Toast.makeText(this, "Course has been updated!", Toast.LENGTH_LONG).show();
 
         // returns to Main Activity if Course is updated

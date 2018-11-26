@@ -80,30 +80,24 @@ public class CreateCourse extends AppCompatActivity {
         codeEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(codeEditText.length() > 3){
-                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                }else if (codeEditText.length() < 3){
-                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
 
-                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(codeEditText.length() > 3){
-                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                }else if (codeEditText.length() < 3){
-                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
-                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(codeEditText.length() > 3){
-                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                }else if (codeEditText.length() < 3){
+                //String text;
+                if(codeEditText.getSelectionStart() < 4){
                     codeEditText.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
+                //text = codeEditText.getText().toString();
+                //text = text.toUpperCase();
+                //codeEditText.setText(text);
+                }else{
+                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
                 }
             }
         });

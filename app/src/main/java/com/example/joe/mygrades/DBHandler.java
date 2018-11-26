@@ -290,7 +290,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateSelectedCourse(int id, String name, String semester, String code, String grade) {
+    public void updateSelectedCourse(int id, String name, String semester, String year, String code, String grade) {
         //get writeable reference to mygrades database
         SQLiteDatabase db = getWritableDatabase();
 
@@ -298,6 +298,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put("name",name);
         cv.put("semester", semester);
+        cv.put("year", year);
         cv.put("code", code);
         cv.put("grade", grade);
 
