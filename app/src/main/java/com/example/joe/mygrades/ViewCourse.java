@@ -36,6 +36,8 @@ public class ViewCourse extends AppCompatActivity {
         setContentView(R.layout.activity_view_course);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        changeBackground();
+
 
         //initialize a bundle that contains the id passed from Main Activity
         bundle = this.getIntent().getExtras();
@@ -45,6 +47,7 @@ public class ViewCourse extends AppCompatActivity {
 
         //initialize dbHandler
         dbHandler = new DBHandler(this,null);
+
 
         //call DBHandler method that gets the name of the course list
         String courseListName = dbHandler.getCourseListName((int) id);
@@ -162,6 +165,39 @@ public class ViewCourse extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void changeBackground(){
+
+        //bundle to get the id from the Main Activity
+        bundle = this.getIntent().getExtras();
+
+        //get the id in the bundle
+        id = bundle.getLong("_id", id);
+
+        //View to set the background as a custom image
+        View view = this.getWindow().getDecorView();
+
+        dbHandler = new DBHandler(this,null);
+
+        //calling the getColumnCourseSemester method in dbHandler, and storing the returned
+        //string in a new string value
+        String semesterName = dbHandler.getColumnCourseSemester((int)id);
+
+        //assigned custom backgrounds to int variables
+        int fall = R.drawable.fall_background;
+        int spring = R.drawable.spring_background;
+        int summer = R.drawable.summer_background;
+
+        //if statement that will assign the custom background depending which semester
+        //is picked by the user
+        if (semesterName.equalsIgnoreCase("fall"))
+            view.setBackgroundResource(fall);
+
+        else if (semesterName.equalsIgnoreCase("Spring"))
+            view.setBackgroundResource(spring);
+
+        else
+            view.setBackgroundResource(summer);
+    }
 
 
 }
