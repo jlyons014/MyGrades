@@ -53,6 +53,7 @@ public class UpdateCourse extends AppCompatActivity {
 
     //declare dbHandler
     DBHandler dbHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,7 @@ public class UpdateCourse extends AppCompatActivity {
         id = bundle.getLong("_id", id);
 
         //initialize dbHandler
-        dbHandler = new DBHandler(this,null);
+        dbHandler = new DBHandler(this, null);
 
         //call DBHandler method that gets the name of the course list
         String courseListName = dbHandler.getCourseListName((int) id);
@@ -76,11 +77,11 @@ public class UpdateCourse extends AppCompatActivity {
         this.setTitle(courseListName);
 
         // Declare and Initialize variables to hold Course details
-        String courseName = dbHandler.getColumnCourseName((int)id);
-        String courseSemester = dbHandler.getColumnCourseSemester((int)id);
-        String courseYear = dbHandler.getColumnCourseYear((int)id);
-        String courseCode = dbHandler.getColumnCourseCode((int)id);
-        String courseGrade = dbHandler.getColumnCourseGrade((int)id);
+        String courseName = dbHandler.getColumnCourseName((int) id);
+        String courseSemester = dbHandler.getColumnCourseSemester((int) id);
+        String courseYear = dbHandler.getColumnCourseYear((int) id);
+        String courseCode = dbHandler.getColumnCourseCode((int) id);
+        String courseGrade = dbHandler.getColumnCourseGrade((int) id);
 
         spinner1 = (Spinner) findViewById(R.id.spinnerSemester);
         spinner2 = (Spinner) findViewById(R.id.spinnerGrade);
@@ -142,10 +143,12 @@ public class UpdateCourse extends AppCompatActivity {
         // creates notification channel
         createNotificationChannels();
 
-    };
+    }
+
+    ;
 
     // good feedback notification
-    public void sendOnChannelGood(){
+    public void sendOnChannelGood() {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_grade)
                 .setContentTitle("Grade Feedback")
@@ -155,10 +158,12 @@ public class UpdateCourse extends AppCompatActivity {
                 .build();
 
         notificationManager.notify(1, notification);
-    };
+    }
+
+    ;
 
     // bad feedback notification
-    public void sendOnChannelBad(){
+    public void sendOnChannelBad() {
         Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_grade)
                 .setContentTitle("Grade Feedback")
@@ -168,14 +173,16 @@ public class UpdateCourse extends AppCompatActivity {
                 .build();
 
         notificationManager.notify(1, notification);
-    };
+    }
+
+    ;
 
     // notification channel to display notification
-    public void createNotificationChannels(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+    public void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
-            CHANNEL_ID,
-            "Channel",
+                    CHANNEL_ID,
+                    "Channel",
                     NotificationManager.IMPORTANCE_HIGH
             );
             channel.setDescription("Notification channel");
@@ -183,12 +190,14 @@ public class UpdateCourse extends AppCompatActivity {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
-    };
+    }
+
+    ;
 
     public boolean onOptionsItemSelected(MenuItem item) {
         // get the id of the item selected
-        switch(item.getItemId()){
-            case R.id.action_home :
+        switch (item.getItemId()) {
+            case R.id.action_home:
                 // initialize an Intent for the Main Activity, start intent,
                 // return true if the id in the item selected is for the Main Activity
                 intent = new Intent(this, MainActivity.class);
@@ -224,10 +233,9 @@ public class UpdateCourse extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.action_create_course:
-                intent = new Intent(this,CreateCourse.class);
+                intent = new Intent(this, CreateCourse.class);
                 startActivity(intent);
                 return true;
-
 
 
             default:
@@ -237,9 +245,9 @@ public class UpdateCourse extends AppCompatActivity {
 
     }
 
-    public void updateCourse(MenuItem menuItem){
+    public void updateCourse(MenuItem menuItem) {
         //initialize dbHandler
-        dbHandler = new DBHandler(this,null);
+        dbHandler = new DBHandler(this, null);
 
         // Initialize EditTexts
         nameEditText = (EditText) findViewById(R.id.nameEditText);
@@ -260,27 +268,63 @@ public class UpdateCourse extends AppCompatActivity {
         String grade = spinner2.getSelectedItem().toString();
 
         // checks if grade result and provide feedback based on result
-        if(!dbHandler.getColumnCourseGrade((int)id).equalsIgnoreCase("--Select--") &&
-                dbHandler.getColumnCourseGrade((int)id).compareTo(grade) > 0){
+        if (!dbHandler.getColumnCourseGrade((int) id).equalsIgnoreCase("--Select--") &&
+                dbHandler.getColumnCourseGrade((int) id).compareTo(grade) > 0) {
             sendOnChannelGood();
-        }else{
+        } else {
             sendOnChannelBad();
         }
 
+        int i = 0;
+        int counter = 0;
 
-        //call DBHandler method to update selected course from the course list
-        dbHandler.updateSelectedCourse((int) id, name, semester, year, code, grade);
-        Toast.makeText(this, "Course has been updated!", Toast.LENGTH_LONG).show();
+        for (i = 0; i < 4; i++)
+            if (!Character.isLetter(code.charAt(i)))
+                counter++;
+
+        for (i = 4; i < 7; i++)
+            if (!Character.isDigit(code.charAt(i)))
+                counter++;
+
+        if (counter >= 1) {
+            Toast.makeText(this, "Incorrect format in code! Must be in [AAAA123] format",
+                    Toast.LENGTH_LONG).show();
+            counter = 0;
+
+            for (i = 0; i < 4; i++)
+                if (!Character.isLetter(code.charAt(i)))
+                    counter++;
+
+            for (i = 4; i < 7; i++)
+                if (!Character.isDigit(code.charAt(i)))
+                    counter++;
+        }
+
+                else {
+                    //call DBHandler method to update selected course from the course list
+                    dbHandler.updateSelectedCourse((int) id, name, semester, year, code, grade);
+                    Toast.makeText(this, "Course has been updated!", Toast.LENGTH_LONG).show();
 
 
-        // returns to Main Activity if Course is updated
-        intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+                    // returns to Main Activity if Course is updated
+                    intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+
+
+                    //call DBHandler method to update selected course from the course list
+                    dbHandler.updateSelectedCourse((int) id, name, semester, year, code, grade);
+                    Toast.makeText(this, "Course has been updated!", Toast.LENGTH_LONG).show();
+
+
+                    // returns to Main Activity if Course is updated
+                    intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+
+                }
+        }
+
+
     }
-
-
-    }
-
 
 
 

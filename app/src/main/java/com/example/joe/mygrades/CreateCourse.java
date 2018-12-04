@@ -153,8 +153,34 @@ public class CreateCourse extends AppCompatActivity {
         //String grade = gradeEditText.getText().toString();
         String grade = spinner2.getSelectedItem().toString();
 
+        int i = 0;
+        int counter = 0;
+
+        for (i = 0; i < 4; i++)
+            if (!Character.isLetter(code.charAt(i)))
+                counter++;
+
+        for (i = 4; i < 7; i++){
+            if (!Character.isDigit(code.charAt(i)))
+                counter++;}
+
+
+
+
         // trim Strings and see if any are equal to an empty String
-        if(name.trim().equals("") || semester.equalsIgnoreCase("--Select--")){
+        if (counter >= 1) {
+            Toast.makeText(this, "Incorrect code format! Must be in [AAAA123] format", Toast.LENGTH_LONG).show();
+            counter = 0;
+
+            for (i = 0; i < 4; i++)
+                if (!Character.isLetter(code.charAt(i)))
+                    counter++;
+
+            for (i = 4; i < 7; i++)
+                if (!Character.isDigit(code.charAt(i)))
+                    counter++;
+        }
+        else if(name.trim().equals("") || semester.equalsIgnoreCase("--Select--")){
             // required data hasn't been input, so display Toast
             Toast.makeText(this, "Please enter a name and a semester!", Toast.LENGTH_LONG).show();
         } else if(code.trim().equals("") && year.trim().equals("") && grade.equalsIgnoreCase("--Select--")){
@@ -173,7 +199,8 @@ public class CreateCourse extends AppCompatActivity {
             // returns to Main Activity
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        } else if(code.trim().equals(" ") && !year.trim().equals("") && grade.equalsIgnoreCase("--Select--")){
+        } else if(code.trim().equals(" ") && !year.trim().equals("") && grade.equalsIgnoreCase("--Select--")) {
+
             // required data has been input + 1 unrequired data, update database and display a different Toast
             dbHandler.addCourse(name, semester, year, "", " ");
             Toast.makeText(this, "Course Added!", Toast.LENGTH_LONG).show();
@@ -197,6 +224,9 @@ public class CreateCourse extends AppCompatActivity {
             // returns to Main Activity
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+
+
+
         }
     }
 
