@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
+import android.text.method.TextKeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,15 +91,7 @@ public class CreateCourse extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                //String text;
-                if(codeEditText.getSelectionStart() < 4){
-                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
-                //text = codeEditText.getText().toString();
-                //text = text.toUpperCase();
-                //codeEditText.setText(text);
-                }else{
-                    codeEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                }
+
             }
         });
     }

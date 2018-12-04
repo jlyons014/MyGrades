@@ -92,10 +92,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:capitalize="characters"
-                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:ems="10"
                 android:hint="[aaaa###]"
-                android:inputType="textCapCharacters"
                 android:maxLength="7" />
         </TableRow>
 

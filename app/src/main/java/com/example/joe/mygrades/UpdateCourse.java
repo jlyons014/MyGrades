@@ -1,12 +1,19 @@
 package com.example.joe.mygrades;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.view.Menu;
@@ -21,6 +28,8 @@ import android.widget.Toast;
 
 public class UpdateCourse extends AppCompatActivity {
 
+    NotificationManagerCompat notificationManager;
+    private static final String CHANNEL_ID = "channel";
 
     // Declare editTexts - used to reference the EditTexts in the resource file
     EditText nameEditText;
@@ -114,27 +123,66 @@ public class UpdateCourse extends AppCompatActivity {
         setcode.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                //String text;
-                if(setcode.getSelectionStart() < 4){
-                    setcode.setKeyListener(DigitsKeyListener.getInstance("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
-                    //text = codeEditText.getText().toString();
-                    //text = text.toUpperCase();
-                    //codeEditText.setText(text);
-                }else{
-                    setcode.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
-                }
+
             }
         });
+
+        // initializes notificationManager
+        notificationManager = NotificationManagerCompat.from(this);
+        // creates notification channel
+        createNotificationChannels();
+
+    };
+
+    // good feedback notification
+    public void sendOnChannelGood(){
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_grade)
+                .setContentTitle("Grade Feedback")
+                .setContentText("Good Job! Keep it up!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        notificationManager.notify(1, notification);
+    };
+
+    // bad feedback notification
+    public void sendOnChannelBad(){
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_grade)
+                .setContentTitle("Grade Feedback")
+                .setContentText("Step your game up!")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        notificationManager.notify(1, notification);
+    };
+
+    // notification channel to display notification
+    public void createNotificationChannels(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(
+            CHANNEL_ID,
+            "Channel",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setDescription("Notification channel");
+
+            NotificationManager manager = getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+        }
     };
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -211,9 +259,19 @@ public class UpdateCourse extends AppCompatActivity {
         //String grade = gradeEditText.getText().toString();
         String grade = spinner2.getSelectedItem().toString();
 
+        // checks if grade result and provide feedback based on result
+        if(!dbHandler.getColumnCourseGrade((int)id).equalsIgnoreCase("--Select--") &&
+                dbHandler.getColumnCourseGrade((int)id).compareTo(grade) > 0){
+            sendOnChannelGood();
+        }else{
+            sendOnChannelBad();
+        }
+
+
         //call DBHandler method to update selected course from the course list
         dbHandler.updateSelectedCourse((int) id, name, semester, year, code, grade);
         Toast.makeText(this, "Course has been updated!", Toast.LENGTH_LONG).show();
+
 
         // returns to Main Activity if Course is updated
         intent = new Intent(this, MainActivity.class);
